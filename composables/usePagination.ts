@@ -1,28 +1,35 @@
-import { computed } from 'vue';
+import { computed, type ComputedRef, type Ref } from 'vue';
+
+type MaybeRefOrComputed<T> = T | Ref<T> | ComputedRef<T>;
 
 interface UsePaginationOptions {
-  totalItems: number;
-  itemsPerPage: number;
-  currentPage: number;
+  totalItems: MaybeRefOrComputed<number>;
+  itemsPerPage: MaybeRefOrComputed<number>;
+  currentPage: MaybeRefOrComputed<number>;
 }
 
 export function usePagination({ totalItems, itemsPerPage, currentPage }: UsePaginationOptions) {
-  const totalPages = computed(() => Math.ceil(totalItems / itemsPerPage));
+  const getVal = <T>(val: MaybeRefOrComputed<T>): T => {
+    return (val && typeof val === 'object' && 'value' in val) ? val.value : val;
+  };
+
+  const totalPages = computed(() => Math.ceil(getVal(totalItems) / getVal(itemsPerPage)));
 
   const startItem = computed(() => {
-    if (totalItems.value === 0) return 0;
-    return (currentPage - 1) * itemsPerPage + 1;
+    const total = getVal(totalItems);
+    if (total === 0) return 0;
+    return (getVal(currentPage) - 1) * getVal(itemsPerPage) + 1;
   });
 
   const endItem = computed(() => {
-    const end = currentPage * itemsPerPage;
-    return Math.min(end, totalItems.value);
+    const end = getVal(currentPage) * getVal(itemsPerPage);
+    return Math.min(end, getVal(totalItems));
   });
 
   const visiblePages = computed(() => {
     const pages: number[] = [];
     const total = totalPages.value;
-    const current = currentPage;
+    const current = getVal(currentPage);
     const maxVisible = 5;
 
     if (total <= maxVisible) {
@@ -42,8 +49,8 @@ export function usePagination({ totalItems, itemsPerPage, currentPage }: UsePagi
     return pages;
   });
 
-  const hasNext = computed(() => currentPage < totalPages.value);
-  const hasPrev = computed(() => currentPage > 1);
+  const hasNext = computed(() => getVal(currentPage) < totalPages.value);
+  const hasPrev = computed(() => getVal(currentPage) > 1);
 
   return {
     totalPages,
