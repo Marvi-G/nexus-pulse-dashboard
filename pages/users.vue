@@ -25,11 +25,11 @@
           :current-page="usersStore.currentPage"
           :total-items="usersStore.filteredUsers.length"
           :items-per-page="usersStore.itemsPerPage"
-          :start-item="pagination.startItem.value"
-          :end-item="pagination.endItem.value"
-          :visible-pages="pagination.visiblePages.value"
-          :has-prev="pagination.hasPrev.value"
-          :has-next="pagination.hasNext.value"
+          :start-item="pagination.startItem"
+          :end-item="pagination.endItem"
+          :visible-pages="pagination.visiblePages"
+          :has-prev="pagination.hasPrev"
+          :has-next="pagination.hasNext"
           @page="usersStore.setPage"
         />
       </template>
@@ -101,6 +101,7 @@
 import { ref, onMounted } from "vue";
 import { useUsersStore } from "~/stores/users";
 import { usePagination } from "~/composables/usePagination";
+import { useSettingsStore } from "~/stores/settings";
 import type { User } from "~/types/user";
 
 definePageMeta({
@@ -108,6 +109,7 @@ definePageMeta({
 });
 
 const usersStore = useUsersStore();
+const settingsStore = useSettingsStore();
 
 const columns = [
   { key: "name" as keyof User, label: "Name" },
@@ -136,6 +138,7 @@ function openEditModal(user: User) {
 function saveEdit() {
   if (editForm.value.id) {
     usersStore.updateUser(editForm.value as User);
+    settingsStore.addToast("User updated successfully", "success");
   }
   editModalOpen.value = false;
 }
@@ -152,6 +155,7 @@ function openDeleteConfirm(user: User) {
 function confirmDelete() {
   if (deleteTarget.value) {
     usersStore.deleteUser(deleteTarget.value.id);
+    settingsStore.addToast("User deleted successfully", "success");
   }
   deleteModalOpen.value = false;
 }

@@ -1,4 +1,4 @@
-import { computed, type ComputedRef, type Ref } from 'vue';
+import { computed, reactive, type ComputedRef, type Ref } from 'vue';
 
 type MaybeRefOrComputed<T> = T | Ref<T> | ComputedRef<T>;
 
@@ -52,12 +52,12 @@ export function usePagination({ totalItems, itemsPerPage, currentPage }: UsePagi
   const hasNext = computed(() => getVal(currentPage) < totalPages.value);
   const hasPrev = computed(() => getVal(currentPage) > 1);
 
-  return {
+  return reactive({
     totalPages,
     startItem,
     endItem,
     visiblePages,
     hasNext,
     hasPrev,
-  };
+  });
 }

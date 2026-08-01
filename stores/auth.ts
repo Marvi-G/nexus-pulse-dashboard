@@ -1,11 +1,12 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
+import { useSettingsStore } from './settings';
 
 export const useAuthStore = defineStore('auth', () => {
   const token = useCookie<string | null>('auth_token', {
     maxAge: 60 * 60 * 24, // 1 day
     sameSite: 'lax',
-    secure: process.env.NODE_ENV === 'production',
+    secure: import.meta.env.PROD,
   });
 
   const userName = useCookie<string | null>('user_name', {
@@ -42,13 +43,28 @@ export const useAuthStore = defineStore('auth', () => {
         token.value = mockToken;
         userEmail.value = email;
         userName.value = email.split('@')[0];
+
+        // Show success toast
+        const settingsStore = useSettingsStore();
+        settingsStore.addToast('Welcome back! Login successful', 'success');
+
         return true;
       }
 
       error.value = 'Invalid credentials. Please try again.';
+
+      // Show error toast
+      const settingsStore = useSettingsStore();
+      settingsStore.addToast('Login failed. Please check your credentials.', 'error');
+
       return false;
     } catch {
       error.value = 'An unexpected error occurred.';
+
+      // Show error toast
+      const settingsStore = useSettingsStore();
+      settingsStore.addToast('An error occurred during login. Please try again.', 'error');
+
       return false;
     } finally {
       isLoading.value = false;
@@ -60,6 +76,11 @@ export const useAuthStore = defineStore('auth', () => {
     userName.value = null;
     userEmail.value = null;
     error.value = null;
+
+    // Show logout toast
+    const settingsStore = useSettingsStore();
+    settingsStore.addToast('You have been logged out successfully', 'info');
+
     navigateTo('/login');
   }
 

@@ -18,7 +18,7 @@ export const useSettingsStore = defineStore('settings', () => {
     marketing: false,
   });
 
-  const toasts = ref<{ id: number; message: string; type: 'success' | 'error' | 'info' }[]>([]);
+  const toasts = ref<{ id: number; message: string; type: 'success' | 'error' | 'info' | 'warning' }[]>([]);
   let toastId = 0;
 
   function initTheme() {
@@ -47,7 +47,7 @@ export const useSettingsStore = defineStore('settings', () => {
     }
   }
 
-  function addToast(message: string, type: 'success' | 'error' | 'info' = 'success') {
+  function addToast(message: string, type: 'success' | 'error' | 'info' | 'warning' = 'success') {
     const id = ++toastId;
     toasts.value.push({ id, message, type });
     setTimeout(() => {
