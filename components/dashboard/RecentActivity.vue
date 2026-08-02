@@ -4,7 +4,9 @@
       <h3 class="text-lg font-semibold text-[var(--color-text-primary)]">
         Recent Activity
       </h3>
-      <button class="btn-ghost text-sm">View All</button>
+      <button class="btn-ghost text-sm">
+        <NuxtLink to="/users">View All </NuxtLink>
+      </button>
     </div>
 
     <div class="divide-y divide-[var(--color-border-primary)]">
