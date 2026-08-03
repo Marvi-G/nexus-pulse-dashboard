@@ -335,6 +335,8 @@ const pageTitle = computed(() => {
     "/": "Dashboard",
     "/analytics": "Analytics",
     "/users": "Users",
+    "/reports": "Reports",
+    "/auditLog": "Audit Log",
     "/notifications": "Notifications",
     "/settings": "Settings",
   };
