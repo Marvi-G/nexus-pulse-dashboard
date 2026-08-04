@@ -1,12 +1,14 @@
 <template>
   <Teleport to="body">
-    <div class="fixed bottom-6 right-6 z-[60] flex flex-col gap-3 max-w-md">
+    <div
+      class="fixed bottom-6 right-6 left-6 sm:left-auto z-[60] flex flex-col gap-3 sm:max-w-md safe-bottom"
+    >
       <TransitionGroup name="toast">
         <div
           v-for="toast in toasts"
           :key="toast.id"
           :class="[
-            'flex items-start gap-3 px-5 py-4 rounded-2xl shadow-elevated border min-w-[320px] animate-slide-up',
+            'flex items-start gap-3 px-5 py-4 rounded-2xl shadow-elevated border animate-slide-up',
             toastClasses(toast.type),
           ]"
         >
@@ -126,6 +128,10 @@ function toastClasses(type: string) {
 </script>
 
 <style scoped>
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
 .toast-enter-active {
   transition: all 400ms cubic-bezier(0.16, 1, 0.3, 1);
 }
