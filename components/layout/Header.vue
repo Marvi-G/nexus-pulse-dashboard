@@ -83,7 +83,7 @@
         <Transition name="dropdown">
           <div
             v-if="notificationDropdownOpen"
-            class="absolute right-0 mt-2 w-96 bg-[var(--color-bg-card)] border border-[var(--color-border-primary)] rounded-xl shadow-elevated animate-slide-down"
+            class="absolute right-0 mt-2 w-[calc(100vw-2rem)] sm:w-96 bg-[var(--color-bg-card)] border border-[var(--color-border-primary)] rounded-xl shadow-elevated animate-slide-down"
           >
             <!-- Header -->
             <div
