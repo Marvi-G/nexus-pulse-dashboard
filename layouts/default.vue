@@ -15,13 +15,14 @@
     >
       <LayoutHeader @toggle-sidebar="sidebarOpen = !sidebarOpen" />
 
-      <main class="flex-1 p-4 sm:p-6 lg:p-8">
+      <main class="flex-1 p-4 sm:p-6 lg:p-8 pb-20 lg:pb-8">
         <slot />
       </main>
 
       <LayoutFooter />
     </div>
 
+    <LayoutBottomNav />
     <UiToast />
   </div>
 </template>
