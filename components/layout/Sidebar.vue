@@ -5,6 +5,9 @@
       isOpen ? 'translate-x-0' : '-translate-x-full',
       collapsed ? 'w-[70px]' : 'w-64',
     ]"
+    @touchstart="handleTouchStart"
+    @touchmove="handleTouchMove"
+    @touchend="handleTouchEnd"
   >
     <!-- Logo -->
     <div
@@ -159,7 +162,7 @@
 </template>
 
 <script setup lang="ts">
-import { h } from "vue";
+import { h, ref } from "vue";
 import { useNotificationsStore } from "~/stores/notifications";
 
 interface Props {
@@ -171,7 +174,7 @@ withDefaults(defineProps<Props>(), {
   collapsed: false,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   close: [];
   toggleCollapse: [];
 }>();
@@ -180,13 +183,43 @@ const route = useRoute();
 const { isDark, toggleTheme } = useTheme();
 const notificationsStore = useNotificationsStore();
 
+// Touch gesture handling
+const touchStartX = ref(0);
+const touchCurrentX = ref(0);
+const isSwiping = ref(false);
+
+function handleTouchStart(event: TouchEvent) {
+  touchStartX.value = event.touches[0].clientX;
+  isSwiping.value = true;
+}
+
+function handleTouchMove(event: TouchEvent) {
+  if (!isSwiping.value) return;
+  touchCurrentX.value = event.touches[0].clientX;
+}
+
+function handleTouchEnd() {
+  if (!isSwiping.value) return;
+
+  const swipeDistance = touchStartX.value - touchCurrentX.value;
+
+  // If swiped left more than 100px, close sidebar
+  if (swipeDistance > 100) {
+    emit("close");
+  }
+
+  isSwiping.value = false;
+}
+
 function isActive(path: string) {
   if (path === "/") return route.path === "/";
   return route.path.startsWith(path);
 }
 
 function closeMobile() {
-  // emit handled by parent
+  if (window.innerWidth < 1024) {
+    emit("close");
+  }
 }
 
 const sunIcon =
