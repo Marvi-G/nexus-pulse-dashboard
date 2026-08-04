@@ -338,6 +338,7 @@ const pageTitle = computed(() => {
     "/reports": "Reports",
     "/auditLog": "Audit Log",
     "/notifications": "Notifications",
+    "/profile": "Profile",
     "/settings": "Settings",
   };
   return titles[route.path] || "Dashboard";
