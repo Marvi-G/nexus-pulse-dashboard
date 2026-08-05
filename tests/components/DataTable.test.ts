@@ -86,6 +86,7 @@ describe('DataTable', () => {
         stubs: {
           UiBadge: { template: '<span><slot /></span>', props: ['label', 'variant'] },
           UiButton: { template: '<button><slot /></button>' },
+          UiEmptyState: { template: '<div class="empty-state">No users found</div>', props: ['title', 'description'] },
         },
       },
     });

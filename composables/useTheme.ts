@@ -1,4 +1,5 @@
 import { useSettingsStore } from '~/stores/settings';
+import { computed } from 'vue';
 
 export function useTheme() {
   const settingsStore = useSettingsStore();
