@@ -1,5 +1,5 @@
 {
-  "name": "pulse-dashboard",
+  "name": "nexus-pulse-dashboard",
   "private": true,
   "type": "module",
   "scripts": {

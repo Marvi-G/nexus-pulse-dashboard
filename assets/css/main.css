@@ -167,3 +167,75 @@
 ::-webkit-scrollbar-thumb:hover {
   @apply bg-[var(--color-text-tertiary)];
 }
+/* Custom CSS for Nexus Pulse logo in the sidebar */
+
+.main-logo {
+  max-width: 9rem;
+  width: 100%;
+}
+.main-logo-closed {
+  max-width: 9rem;
+  width: 100%;
+  min-width: 5rem;
+  position: relative;
+  right: 24px;
+  width: 5rem;
+}
+/* Logo transition animations */
+.main-logo,
+.main-logo-closed {
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease,
+    width 0.3s ease,
+    max-width 0.3s ease;
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* When collapsing - fade out and scale down slightly */
+.main-logo-closed {
+  animation: logoCollapse 0.3s ease forwards;
+  max-width: 9rem;
+  width: 100%;
+  min-width: 5rem;
+  position: relative;
+  right: 24px;
+  width: 5rem;
+}
+
+/* When expanding - fade in and scale up */
+.main-logo {
+  animation: logoExpand 0.3s ease forwards;
+  max-width: 9rem;
+  width: 100%;
+}
+
+@keyframes logoCollapse {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes logoExpand {
+  0% {
+    opacity: 0.5;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.collapse-icon-button {
+  margin-left: -35px !important;
+}

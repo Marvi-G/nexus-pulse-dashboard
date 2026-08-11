@@ -22,32 +22,10 @@
           />
         </svg>
       </button>
-      <div>
-        <h1 class="page-title text-lg">{{ pageTitle }}</h1>
-      </div>
     </div>
 
     <!-- Right: Actions -->
     <div class="flex items-center gap-2">
-      <!-- Search (decorative) -->
-      <button
-        class="hidden sm:flex p-2 rounded-xl text-[var(--color-text-tertiary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-bg-hover)] transition-colors"
-      >
-        <svg
-          class="w-5 h-5"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          stroke-width="2"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-          />
-        </svg>
-      </button>
-
       <!-- Notification bell -->
       <div class="relative" ref="notificationDropdownRef">
         <button
@@ -83,7 +61,7 @@
         <Transition name="dropdown">
           <div
             v-if="notificationDropdownOpen"
-            class="absolute right-0 mt-2 w-[calc(100vw-2rem)] sm:w-96 bg-[var(--color-bg-card)] border border-[var(--color-border-primary)] rounded-xl shadow-elevated animate-slide-down"
+            class="absolute right-0 mt-2 w-[calc(85vw-2rem)] sm:w-96 bg-[var(--color-bg-card)] border border-[var(--color-border-primary)] rounded-xl shadow-elevated animate-slide-down"
           >
             <!-- Header -->
             <div

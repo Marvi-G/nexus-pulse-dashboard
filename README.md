@@ -1,4 +1,4 @@
-# Pulse Dashboard
+# Nexus Pulse Dashboard
 
 A modern, feature-rich analytics dashboard built with Nuxt 3, TypeScript, and Tailwind CSS. This project demonstrates advanced frontend development skills including state management, data visualization, responsive design, and comprehensive testing.
 
@@ -57,7 +57,7 @@ A modern, feature-rich analytics dashboard built with Nuxt 3, TypeScript, and Ta
 # Clone the repository
 git clone <your-repo-url>
 
-cd pulse-dashboard
+cd nexus-pulse-dashboard
 
 # Install dependencies
 npm install
@@ -121,7 +121,7 @@ npm run test
 text
 
 
-pulse-dashboard/
+nexus-pulse-dashboard/
 
 ├── assets/
 

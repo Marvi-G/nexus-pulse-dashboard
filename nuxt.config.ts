@@ -15,13 +15,13 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      appName: 'Pulse',
+      appName: 'Nexus Pulse',
     },
   },
 
   app: {
     head: {
-      title: 'Pulse - Modern Dashboard',
+      title: 'Nexus Pulse - Modern Dashboard',
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1, viewport-fit=cover' },
