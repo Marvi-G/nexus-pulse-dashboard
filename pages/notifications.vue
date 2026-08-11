@@ -17,18 +17,16 @@
 
     <!-- Filters -->
     <div class="card p-4">
-      <div
-        class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
-      >
-        <!-- Filter tabs -->
+      <div class="flex flex-col gap-4">
+        <!-- Filter tabs - wrap on mobile -->
         <div
-          class="flex items-center gap-1 p-1 rounded-xl bg-[var(--color-bg-tertiary)]"
+          class="flex flex-wrap items-center gap-1 p-1 rounded-xl bg-[var(--color-bg-tertiary)]"
         >
           <button
             v-for="tab in tabs"
             :key="tab.value"
             :class="[
-              'px-3.5 py-1.5 text-sm font-medium rounded-lg transition-all',
+              'px-3 py-1.5 text-sm font-medium rounded-lg transition-all',
               notificationsStore.filter === tab.value
                 ? 'bg-[var(--color-bg-card)] text-[var(--color-text-primary)] shadow-soft'
                 : 'text-[var(--color-text-tertiary)] hover:text-[var(--color-text-secondary)]',
@@ -46,17 +44,19 @@
         </div>
 
         <!-- Unread toggle -->
-        <label class="flex items-center gap-2 cursor-pointer">
-          <input
-            type="checkbox"
-            :checked="notificationsStore.showUnreadOnly"
-            class="w-4 h-4 rounded border-[var(--color-border-primary)] text-[var(--color-accent)] focus:ring-[var(--color-accent)]"
-            @change="notificationsStore.toggleUnreadOnly()"
-          />
-          <span class="text-sm text-[var(--color-text-secondary)]"
-            >Unread only</span
-          >
-        </label>
+        <div class="flex items-center justify-between sm:justify-start">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              :checked="notificationsStore.showUnreadOnly"
+              class="w-4 h-4 rounded border-[var(--color-border-primary)] text-[var(--color-accent)] focus:ring-[var(--color-accent)]"
+              @change="notificationsStore.toggleUnreadOnly()"
+            />
+            <span class="text-sm text-[var(--color-text-secondary)]"
+              >Unread only</span
+            >
+          </label>
+        </div>
       </div>
     </div>
 
