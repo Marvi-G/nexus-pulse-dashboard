@@ -239,3 +239,7 @@
 .collapse-icon-button {
   margin-left: -35px !important;
 }
+.logo-login {
+  max-width: 12rem;
+  width: 100%;
+}
