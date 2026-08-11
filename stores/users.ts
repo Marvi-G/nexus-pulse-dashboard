@@ -90,6 +90,11 @@ export const useUsersStore = defineStore('users', () => {
     }
   }
 
+  function addUser(user: Omit<User, 'id'>) {
+    const newId = Math.max(...allUsers.value.map(u => u.id), 0) + 1;
+    allUsers.value.unshift({ ...user, id: newId });
+  }
+
   async function fetchUsers() {
     isLoading.value = true;
     await new Promise((resolve) => setTimeout(resolve, 500));
@@ -111,6 +116,7 @@ export const useUsersStore = defineStore('users', () => {
     setPage,
     deleteUser,
     updateUser,
+    addUser,
     fetchUsers,
   };
 });

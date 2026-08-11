@@ -1,9 +1,27 @@
 <template>
   <div class="space-y-6 animate-fade-in">
     <!-- Page header -->
-    <div>
-      <h1 class="page-title">Users</h1>
-      <p class="page-subtitle">Manage your team members and their roles.</p>
+    <div class="flex items-center justify-between">
+      <div>
+        <h1 class="page-title">Users</h1>
+        <p class="page-subtitle">Manage your team members and their roles.</p>
+      </div>
+      <UiButton variant="primary" @click="openAddModal">
+        <svg
+          class="w-4 h-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 4v16m8-8H4"
+          />
+        </svg>
+        Add User
+      </UiButton>
     </div>
 
     <!-- Data table -->
@@ -34,6 +52,53 @@
         />
       </template>
     </TablesDataTable>
+
+    <!-- Add user modal -->
+    <UiModal v-model="addModalOpen" title="Add New User">
+      <form @submit.prevent="saveNewUser" class="space-y-4">
+        <UiInput
+          v-model="addForm.name"
+          label="Name"
+          placeholder="Full name"
+          required
+        />
+        <UiInput
+          v-model="addForm.email"
+          label="Email"
+          type="email"
+          placeholder="Email address"
+          required
+        />
+        <div class="space-y-1.5">
+          <label
+            class="block text-sm font-medium text-[var(--color-text-secondary)]"
+            >Role</label
+          >
+          <select v-model="addForm.role" class="input-base" required>
+            <option value="Admin">Admin</option>
+            <option value="Editor">Editor</option>
+            <option value="Viewer">Viewer</option>
+          </select>
+        </div>
+        <div class="space-y-1.5">
+          <label
+            class="block text-sm font-medium text-[var(--color-text-secondary)]"
+            >Status</label
+          >
+          <select v-model="addForm.status" class="input-base" required>
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+            <option value="Pending">Pending</option>
+          </select>
+        </div>
+      </form>
+      <template #footer>
+        <UiButton variant="secondary" @click="addModalOpen = false"
+          >Cancel</UiButton
+        >
+        <UiButton variant="primary" @click="saveNewUser">Add User</UiButton>
+      </template>
+    </UiModal>
 
     <!-- Edit modal -->
     <UiModal v-model="editModalOpen" title="Edit User">
@@ -125,6 +190,40 @@ const pagination = usePagination({
   itemsPerPage: usersStore.itemsPerPage,
   currentPage: computed(() => usersStore.currentPage),
 });
+
+// Add user modal
+const addModalOpen = ref(false);
+const addForm = ref<Partial<User>>({
+  name: "",
+  email: "",
+  role: "Viewer",
+  status: "Active",
+});
+
+function openAddModal() {
+  addForm.value = {
+    name: "",
+    email: "",
+    role: "Viewer",
+    status: "Active",
+  };
+  addModalOpen.value = true;
+}
+
+function saveNewUser() {
+  if (addForm.value.name && addForm.value.email) {
+    const newUser = {
+      name: addForm.value.name,
+      email: addForm.value.email,
+      role: addForm.value.role as User["role"],
+      status: addForm.value.status as User["status"],
+      joinDate: new Date().toISOString().split("T")[0],
+    };
+    usersStore.addUser(newUser);
+    settingsStore.addToast("User added successfully", "success");
+    addModalOpen.value = false;
+  }
+}
 
 // Edit modal
 const editModalOpen = ref(false);
